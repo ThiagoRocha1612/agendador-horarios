@@ -25,6 +25,15 @@ public class AgendamentoServices {
             return agendamentoRepository.save(agendamentoEntity);
         }
     }
-    
+
+    public void deletarAgendamento(LocalDateTime dataHoraAgendamento, String cliente) {
+        agendamentoRepository.deleteByDataHoraAgendamentoAndCliente(dataHoraAgendamento, cliente);
+
+    }
+
+    public AgendamentoEntity buscarAgendamentoDoDia(LocalDateTime dataHoraInical, LocalDateTime dataHoraFinal) {
+        LocalDateTime primeiraHoraDoDia = data.atStartOfDay();
+        LocalDateTime ultimaHoraDoDia = data.atTime(23, 59, 59).plusDays(1).minusSeconds(1);
+        return agendamentoRepository.findByDataHoraAgendamentoBetween(primeiraHoraDoDia, ultimaHoraDoDia);
     }
 }
